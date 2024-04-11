@@ -1,55 +1,22 @@
 import asyncio
-import os
-
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters import Command
-from dotenv import load_dotenv
-from os import getenv
 import logging
-from random import choice
-
-load_dotenv()
-bot = Bot(token=getenv('BOT_TOKEN'))
-dp = Dispatcher()
-id_list = []
 
 
-# handlers
-@dp.message(Command('start'))
-async def start_cmd(message: types.Message):
-    if message.from_user.id not in id_list:
-        id_list.append(message.from_user.id)
-    await message.answer(f'Привет! {message.from_user.first_name}, '
-                         f'наш бот обслуживает уже {len(id_list)} пользователя')
-
-
-@dp.message(Command('myinfo'))
-async def start_cmd(message: types.Message):
-    img_dir = 'D:/pyProjects/pythonProject/pics'
-    img_list = os.listdir(img_dir)
-    img_path = os.path.join(img_dir, choice(img_list))
-    file = types.FSInputFile(img_path)
-    await message.answer_photo(photo=file, caption=f'ваш id: {message.from_user.id} '
-                                                   f'ваше имя: {message.from_user.first_name} '
-                                                   f'ваш username: {message.from_user.username}')
-
-
-@dp.message(Command('random_pic'))
-async def send_picture(message: types.Message):
-    img_dir = 'D:/pyProjects/pythonProject/pics'
-    img_list = os.listdir(img_dir)
-    img_path = os.path.join(img_dir, choice(img_list))
-    file = types.FSInputFile(img_path)
-    await message.answer_photo(photo=file)
-
-
-@dp.message()
-async def echo(message: types.Message):
-    logging.info(message)
-    await message.answer(message.text)
+from config import bot, dp, set_my_menu
+from Handlers.start import start_router
+from Handlers.review import review_router
+from Handlers.menu import menu_router
+from Handlers.generic_answer import echo_router
 
 
 async def main():
+
+    await set_my_menu()
+    dp.include_router(start_router)
+    dp.include_router(menu_router)
+    dp.include_router(review_router)
+    dp.include_router(echo_router)
+
     # запуск бота
     await dp.start_polling(bot)
 
