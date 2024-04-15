@@ -1,7 +1,7 @@
 from aiogram import Router, F, types
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
-
+from config import database
 
 review_router = Router()
 
@@ -99,5 +99,12 @@ async def process_rate(message: types.Message, state: FSMContext):
 async def process_comment(message: types.Message, state: FSMContext):
     kb = types.ReplyKeyboardRemove()
     await state.update_data(comment=message.text)
+    data = await state.get_data()
+
+    await database.execute(
+        "INSERT INTO review (name, phone, date, rate, clean, comment) VALUES(?, ?, ?, ?, ?, ?)",
+        (data['name'], data['phone_number'], data['date'], data['rate'], data['clean'], data['comment'])
+    )
     await message.answer('Спасибо за ваш отзыв!\n/start\n/menu\n')
+    await state.clear()
 
