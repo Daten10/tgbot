@@ -3,10 +3,10 @@ import logging
 from aiogram import Bot
 
 from config import bot, dp, set_my_menu, database
-from Handlers.start import start_router
-from Handlers.review import review_router
-from Handlers.menu import menu_router
-from Handlers.generic_answer import echo_router
+from handlers.start import start_router
+from handlers.review import review_router
+from handlers.menu import menu_router
+from handlers.generic_answer import echo_router
 
 
 async def on_startup(bot: Bot):

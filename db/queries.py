@@ -6,7 +6,7 @@ class Queries:
             phone INTEGER,
             date TEXT,
             rate TEXT,
-            clean TEXT,
+            clean INTEGER,
             comment TEXT
         )
     """

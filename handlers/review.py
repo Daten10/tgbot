@@ -37,14 +37,17 @@ async def process_phone_number(message: types.Message, state: FSMContext):
         return
     await state.update_data(phone_number=int(number))
     await state.set_state(UserReview.date)
-    await message.answer('Введите дату посещения')
+    await message.answer('Введите дату посещения форматом "дд-мм-гггг"')
 
 
 @review_router.message(UserReview.date)
 async def process_date(message: types.Message, state: FSMContext):
     date = message.text
-    if '.' not in date:
-        await message.answer('Введите дату форматом "дд.мм.гггг"')
+    if '-' not in date:
+        await message.answer('Введите дату форматом "дд-мм-гггг"')
+        return
+    elif len(date) != 10:
+        await message.answer('Введите дату форматом "дд-мм-гггг"')
         return
     await state.update_data(date=date)
     await state.set_state(UserReview.rate)
@@ -74,12 +77,15 @@ async def process_clean(message: types.Message, state: FSMContext):
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
             [
-                types.KeyboardButton(text='Неудовлетворительно'),
-                types.KeyboardButton(text='Удовлетворительно')
+                types.KeyboardButton(text='1'),
+                types.KeyboardButton(text='2')
             ],
             [
-                types.KeyboardButton(text='Хорошо'),
-                types.KeyboardButton(text='Отлично')
+                types.KeyboardButton(text='3'),
+                types.KeyboardButton(text='4')
+            ],
+            [
+                types.KeyboardButton(text='5')
             ]
         ], resize_keyboard=False
     )
