@@ -18,6 +18,9 @@ def start_keyboard():
 
             [
                 types.InlineKeyboardButton(text='Оставить отзыв', callback_data='review')
+            ],
+            [
+                types.InlineKeyboardButton(text='Парсер', callback_data='scrapper')
             ]
 
         ]
