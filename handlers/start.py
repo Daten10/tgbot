@@ -2,13 +2,12 @@ from aiogram import Router, types, F
 from aiogram.filters import Command
 from keyboards import start_keyboard
 from scrapper.scraper import Scrapper
-import asyncio
 start_router = Router()
 
 
 @start_router.message(Command('start'))
 async def start_cmd(message: types.Message):
-    file = types.FSInputFile("D:/pyProjects/pythonProject/pics/imperia.jpg")
+    file = types.FSInputFile("pic/imperia.jpg")
     await message.answer_photo(photo=file, reply_markup=start_keyboard(), caption='Добро пожаловать в империю пиццы!')
 
 

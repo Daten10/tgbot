@@ -37,8 +37,9 @@ class Queries:
     """
 
     POPULATE_DISHES = """
-    INSERT INTO dishes (name, price, picture, category_id) VALUES ('Куринная пицца', '465', 'pics/Medium.png', '1'),
-    ('Китайский суп', '380', 'pics/soup.png', '2'),
-    ('Картошка фри', '180', 'pics/fry.png', '3'),
-    ('Лимонад', '120', 'pics/juice.png', '4')
+    INSERT INTO dishes (name, price, picture, category_id) VALUES 
+    ('Куринная пицца', '465', 'pic/Medium.png', '1'),
+    ('Китайский суп', '380', 'pic/soup.png', '2'),
+    ('Картошка фри', '180', 'pic/fry.png', '3'),
+    ('Лимонад', '120', 'pic/juice.png', '4')
     """
