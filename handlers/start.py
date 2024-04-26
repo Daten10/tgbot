@@ -2,6 +2,7 @@ from aiogram import Router, types, F
 from aiogram.filters import Command
 from keyboards import start_keyboard
 from scrapper.scraper import Scrapper
+import asyncio
 start_router = Router()
 
 
@@ -34,10 +35,8 @@ async def menu(callback: types.CallbackQuery):
 
 @start_router.callback_query(F.data == 'scrapper')
 async def about_us(callback: types.CallbackQuery):
-    # await callback.answer('o nas')
     await callback.answer()
     scrap = Scrapper()
-    scrap.get_page()
-    links = scrap.get_link()
-    for link in links:
+    p_link = await scrap.get_links()
+    for link in p_link:
         await callback.message.answer(link)
